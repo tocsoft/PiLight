@@ -38,8 +38,8 @@ def _loop():
             _setLight(1, entry[1])
             _setLight(2, entry[2])
             
-            if(len(entry) == 2):
-                time.sleep(entry[1])
+            if(len(entry) == 4):
+                time.sleep(entry[3])
 
             _patternIndex +=1
             if (len(_pattern) == _patternIndex):
