@@ -59,7 +59,7 @@ def makeSound():
     return 'strobe'
 
 @app.route('/sound/forever')
-def makeSound():
+def makeSoundForverer():
     buzzer.setPattern(pattern=[[1,0.25],[0,0.25]], loopCounter=-1)
     return 'strobe'
 
