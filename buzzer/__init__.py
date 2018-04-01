@@ -73,7 +73,7 @@ def start(pattern, callBack = None, loopCounter = -1):
     global _callBack
     global _loopEnabled
     global _loopPos
-    stopPattern()
+    stop()
     _callBack = callBack
     _loopCounter = loopCounter
     _pattern = pattern

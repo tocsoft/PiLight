@@ -55,7 +55,7 @@ def toggleStrobe():
 
 @app.route('/light/bounce')
 def toggleBounce():
-    lights.start([[1,0,0,0.5],[0,1,0,0.5],[0,0,1,0.5],[0,1,0,0.5]])
+    lights.start([[1,0,0,0.5],[0,1,0,0.25],[0,0,1,0.5],[0,1,0,0.25]])
     return 'strobe'
 
 @app.route('/sound')
