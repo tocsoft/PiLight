@@ -33,29 +33,29 @@ def _loop():
     
     while True:
         if _run:
-        entry = _pattern[_patternIndex]
-        _setLight(0, entry[0])
-        _setLight(1, entry[1])
-        _setLight(2, entry[2])
-        
-        if(len(entry) == 2):
-            time.sleep(entry[1])
+            entry = _pattern[_patternIndex]
+            _setLight(0, entry[0])
+            _setLight(1, entry[1])
+            _setLight(2, entry[2])
+            
+            if(len(entry) == 2):
+                time.sleep(entry[1])
 
-        _patternIndex +=1
-        if (len(_pattern) == _patternIndex):
-            _patternIndex = 0
-            if (_loopEnabled):
-                _loopPos += 1
-                if(_loopPos >= _loopCounter):
-                    _loopPos = 0
+            _patternIndex +=1
+            if (len(_pattern) == _patternIndex):
+                _patternIndex = 0
+                if (_loopEnabled):
+                    _loopPos += 1
+                    if(_loopPos >= _loopCounter):
+                        _loopPos = 0
+                        if (_callBack is not None):            
+                            _callBack() # callback is responsible for calling stop after loop count completed
+                        else:
+                            stop()
+                else:
+                    # loop forever unless callback stops it
                     if (_callBack is not None):            
-                        _callBack() # callback is responsible for calling stop after loop count completed
-                    else:
-                        stop()
-            else:
-                # loop forever unless callback stops it
-                if (_callBack is not None):            
-                    _callBack()
+                        _callBack()
           
 def _setLight(light, state, force=False):
     light = light % 3
