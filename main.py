@@ -47,6 +47,11 @@ def toggleAllOff():
     lights.allOff()
     return 'all off'
 
+@app.route('/light/strobe')
+def toggleAllOff():
+    lights.setAnimation([[1,0,0,0.5],[0,1,0,0.5],[0,0,1,0.5]])
+    return 'strobe'
+
 
 def _finishedStrobe():
     lights.allOff()  
