@@ -7,7 +7,6 @@ import threading
 _redLight = 0
 _amberLight = 1
 _greenLight = 2
-_thread = threading.Thread(target=_animateLoop, args=())
 
 _offPattern = [[0,0,0]]
 
@@ -31,6 +30,8 @@ def _animateLoop():
                 _patternIndex = 0
             else:
                 stopAnimation()
+
+_thread = threading.Thread(target=_animateLoop, args=())
 
 def _setLight(light, state):
     light = light % 3
