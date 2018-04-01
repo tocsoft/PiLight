@@ -15,10 +15,11 @@ def index():
 def toggleRed():
     lights.setAnimation([[1,0,0]])
     return 'red'
-    
+
 @app.route('/flash/red')
 def flashRed():
-    lights.setAnimation([[1,0,0,0.5],[0,0,0,0.5]])
+    # flash twice then show solid red
+    lights.setAnimation([[1,0,0,0.5],[0,0,0,0.5],[1,0,0,0.5],[0,0,0,0.5]], toggleRed)
     return 'red-flash'
 
 @app.route('/light/amber')
@@ -28,7 +29,7 @@ def toggleAmber():
 
 @app.route('/flash/amber')
 def flashamber():
-    lights.setAnimation([[0,1,0,0.5],[0,0,0,0.5]])
+    lights.setAnimation([[0,1,0,0.5],[0,0,0,0.5],[0,1,0,0.5],[0,0,0,0.5]],toggleAmber )
     return 'amber-flash'
 
 @app.route('/light/green')
@@ -38,7 +39,7 @@ def toggleGreen():
 
 @app.route('/flash/green')
 def flashgreen():
-    lights.setAnimation([[0,0,1,0.5],[0,0,0,0.5]])
+    lights.setAnimation([[0,0,1,0.5],[0,0,0,0.5],[0,0,1,0.5],[0,0,0,0.5]],toggleGreen)
     return 'green-flash'
     
 @app.route('/light/off')
