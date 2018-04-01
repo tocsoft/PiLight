@@ -12,8 +12,10 @@ _offPattern = [[0]]
 _pattern = _offPattern
 _patternIndex = 0 
 _loopCounter = -1
+_loopPos = 0
 _callBack = None
 _run = False
+_loopEnabled  = False
 
 def _loop():
     global _patternIndex
@@ -21,28 +23,32 @@ def _loop():
     global _pattern
     global _callBack
     global _loopCounter
+    global _loopEnabled
     while True:
         if _run:
-            if(_patternIndex >= 0):
-                entry = _pattern[_patternIndex]
-                _set(entry[0])
-                if(len(entry) == 2):
-                    time.sleep(entry[1])
-                
-                if(_loopCounter > 0):
-                    _loopCounter -= 1
-                if(_loopCounter  == 0):
-                    stopPattern()
+            entry = _pattern[_patternIndex]
+            _set(entry[0])
+            
+            if(len(entry) == 2):
+                time.sleep(entry[1])
 
-                _patternIndex +=1
-                if (len(_pattern) == _patternIndex):
-                    _patternIndex = 0
-                    if(_loopCounter <= 0):
-                        if (_callBack is not None):            
-                            if (_callBack()):
-                                _patternIndex = 0
-                            else:
-                                stopPattern()
+            _patternIndex +=1
+            if (len(_pattern) == _patternIndex):
+                _patternIndex = 0
+                if (_loopEnabled):
+                    _loopPos += 1
+                    if(_loopPos >= _loopCounter):
+                        _tryEndLoop()
+                else:
+                    _tryEndLoop()
+
+def _tryEndLoop()
+    global _callBack
+    if (_callBack is not None):            
+        if (_callBack()):
+            _loopPos = 0
+        else:
+            stopPattern()
 
 def _set(state, force=False):
     global _currentState
@@ -61,10 +67,7 @@ def stopPattern():
     global _callBack
     global _loopCounter
     global _run
-    _loopCounter = -1
-    _callBack = None
-    _patternIndex= -10
-    _pattern = _offPattern
+    _set(0)
     _run = False
     
 def setPattern(pattern, callBack = None, loopCounter = -1):
@@ -75,11 +78,13 @@ def setPattern(pattern, callBack = None, loopCounter = -1):
     global _callBack
     stopPattern()
     _callBack = callBack
-    _patternIndex= -10
     _loopCounter = loopCounter
     _pattern = pattern
     _patternIndex= 0
+    _loopPos = 0
+    _loopEnabled = (loopCounter > 0)
     _run = True
+    
 
 
 _thread = threading.Thread(target=_loop, args=())
