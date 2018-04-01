@@ -45,7 +45,7 @@ def _setLight(light, state):
     light = light % 3
     global _currentState
     global _lights
-    if(_currentState[light] != state)
+    if(_currentState[light] != state):
         _lights[light].write(state)
         _currentState[light] = state
 
