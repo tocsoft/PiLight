@@ -29,7 +29,7 @@ def _loop():
             if(_loopCounter > 0):
                 _loopCounter -= 1
             if(_loopCounter  == 0):
-                stopAnimation()
+                stopPattern()
 
             _patternIndex +=1
             if (len(_pattern) == _patternIndex):
@@ -39,7 +39,7 @@ def _loop():
                         if (_callBack()):
                             _patternIndex = 0
                         else:
-                            stopAnimation()
+                            stopPattern()
 
 def _set(state, force=False):
     global _currentState
