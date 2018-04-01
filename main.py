@@ -39,7 +39,7 @@ def toggleGreen():
 
 @app.route('/flash/green')
 def flashgreen():
-    lights.setAnimation([0,0,0,0.5],[0,0,1,0.5],[0,0,0,0.5],[0,0,1,0.5],[0,0,0,0.5]],toggleGreen)
+    lights.setAnimation([[0,0,0,0.5],[0,0,1,0.5],[0,0,0,0.5],[0,0,1,0.5],[0,0,0,0.5]],toggleGreen)
     return 'green-flash'
     
 @app.route('/light/off')
