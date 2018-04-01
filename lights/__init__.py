@@ -59,9 +59,9 @@ def stopAnimation():
     _callBack = None
     _pattern = _offPattern
     _patternIndex= 0
-    _setLight(0,0,true)
-    _setLight(1,0,true)
-    _setLight(2,0,true)
+    _setLight(0,0, True)
+    _setLight(1,0, True)
+    _setLight(2,0, True)
     
 def setAnimation(pattern, callBack = None):
     global _patternIndex
