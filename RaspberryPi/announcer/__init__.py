@@ -18,7 +18,7 @@ def ip_is_local(ip_string):
     Uses a regex to determine if the input ip is on a local network. Returns a boolean. 
     It's safe here, but never use a regex for IP verification if from a potentially dangerous source.
     """
-    combined_regex = "(^10\.)|(^172\.1[6-9]\.)|(^172\.2[0-9]\.)|(^172\.3[0-1]\.)|(^192\.168\.)"
+    combined_regex = "(^10\.)|(^172\.1[6-9]\.)|(^172\.2[0-9]\.)|(^172\.3[0-1]\.)|(^192\.168\.)|(^239\.255\.)"
     return re.match(combined_regex, ip_string) is not None # is not None is just a sneaky way of converting to a boolean
 
 
