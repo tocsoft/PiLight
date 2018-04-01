@@ -7,6 +7,12 @@ import threading
 _redLight = 0
 _amberLight = 1
 _greenLight = 2
+_currentState = [0,0,0]
+_lights = [
+    automationhat.output.one,
+    automationhat.output.two,
+    automationhat.output.three
+]
 
 _offPattern = [[0,0,0]]
 
@@ -37,12 +43,11 @@ def _animateLoop():
 
 def _setLight(light, state):
     light = light % 3
-    if light == 0:
-        automationhat.output.one.write(state)
-    if light == 1:
-        automationhat.output.two.write(state)
-    if light == 2:
-        automationhat.output.three.write(state)
+    global _currentState
+    global _lights
+    if(_currentState[light] != state)
+        _lights[light].write(state)
+        _currentState[light] = state
 
 def allOff():
     stopAnimation()
