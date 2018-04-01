@@ -2,6 +2,7 @@
 
 from flask import Flask
 import lights
+import buzzer
 
 
 app = Flask(__name__)
@@ -52,10 +53,16 @@ def toggleStrobe():
     lights.setAnimation([[1,0,0,0.5],[0,1,0,0.5],[0,0,1,0.5]])
     return 'strobe'
 
+@app.route('/sound')
+def makeSound():
+    buzzer.setPattern([[1,0.25],[0,0.5],[1,0.25],[0,0.5]])
+    return 'strobe'
+
 
 def _finishedStrobe():
     lights.allOff()  
-    
+
+buzzer.off()
 lights.allOff()
 lights.setAnimation([[0,0,0,0.5],[1,0,0,0.5],[0,1,0,0.5],[0,0,1,0.5]], _finishedStrobe)
 
