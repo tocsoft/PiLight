@@ -38,7 +38,7 @@ def _animateLoop():
 def _setLight(light, state):
     light = light % 3
     if light == 0:
-        automationhat.output.one.write(state)
+        automationhat.output.one.on(state)
     if light == 1:
         automationhat.output.two.write(state)
     if light == 2:
@@ -48,6 +48,9 @@ def allOff():
     stopAnimation()
 
 def stopAnimation():
+    global _patternIndex
+    global _pattern
+    global _callBack
     _callBack = None
     _pattern = _offPattern
     _patternIndex= 0
@@ -56,6 +59,9 @@ def stopAnimation():
     _setLight(2,0)
     
 def setAnimation(pattern, callBack = None):
+    global _patternIndex
+    global _pattern
+    global _callBack
     stopAnimation()
     _callBack = callBack
     _pattern = pattern
