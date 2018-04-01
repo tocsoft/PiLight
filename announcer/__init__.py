@@ -128,8 +128,8 @@ def drop_multicast_membership(my_socket, multicast_ip):
 #         print ("%s says the time is %s" % (address, data))
 
 _announce = False
-
 def _loop():
+    print ("loop starting")
     global _announce
     # Choose an arbitrary multicast IP and port.
     # 239.255.0.0 - 239.255.255.255 are for local network multicast use.
@@ -142,17 +142,14 @@ def _loop():
 
     while True:
         if (_announce):
-            
             # Just sending Unix time as a message
             message = str(time.time())
-
             #message = get_local_ip()
             print (message)
             # Send data. Destination must be a tuple containing the ip and port.
             my_socket.sendto(message, (multicast_ip, port))
             time.sleep(15)
         else:
-            
             time.sleep(1)
 
 def start():
