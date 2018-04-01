@@ -38,7 +38,7 @@ def _animateLoop():
 def _setLight(light, state):
     light = light % 3
     if light == 0:
-        automationhat.output.one.on(state)
+        automationhat.output.one.write(state)
     if light == 1:
         automationhat.output.two.write(state)
     if light == 2:
