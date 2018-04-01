@@ -116,16 +116,16 @@ def drop_multicast_membership(my_socket, multicast_ip):
     # Leave group
     my_socket.setsockopt(socket.IPPROTO_IP, socket.IP_DROP_MEMBERSHIP, membership_request)
 
-def listen_loop(multicast_ip, port):
-    my_socket = create_socket(multicast_ip, port+1)
+# def listen_loop(multicast_ip, port):
+#     my_socket = create_socket(multicast_ip, port+1)
 
-    while True:
-        # Data waits on socket buffer until we retrieve it.
-        # NOTE: Normally, you would want to compare the incoming data's source address to your own, and filter it out
-        #       if it came rom the current machine. Everything you send gets echoed back at you if your socket is
-        #       subscribed to the multicast group.
-        data, address = my_socket.recvfrom(4096)
-        print "%s says the time is %s" % (address, data)
+#     while True:
+#         # Data waits on socket buffer until we retrieve it.
+#         # NOTE: Normally, you would want to compare the incoming data's source address to your own, and filter it out
+#         #       if it came rom the current machine. Everything you send gets echoed back at you if your socket is
+#         #       subscribed to the multicast group.
+#         data, address = my_socket.recvfrom(4096)
+#         print ("%s says the time is %s" % (address, data))
 
 _announce = False
 
