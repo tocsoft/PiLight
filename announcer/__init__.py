@@ -108,6 +108,7 @@ def drop_multicast_membership(my_socket, multicast_ip):
     Note that this happens automatically (done by the kernel) if the socket is closed.
     """
 
+
     local_ip = get_local_ip()
 
     # Must reconstruct the same request used when adding the membership initially
@@ -138,7 +139,7 @@ def _loop():
     multicast_address = "239.255.4.3"
     multicast_port = 1234
     # Offset the port by one so that we can send and receive on the same machine
-    my_socket = create_socket(multicast_ip, port+1)
+    my_socket = create_socket(multicast_address, multicast_port+1)
 
     while True:
         if (_announce):
@@ -147,7 +148,7 @@ def _loop():
             #message = get_local_ip()
             print (message)
             # Send data. Destination must be a tuple containing the ip and port.
-            my_socket.sendto(message, (multicast_ip, port))
+            my_socket.sendto(message, (multicast_address, multicast_port))
             time.sleep(15)
         else:
             time.sleep(1)
