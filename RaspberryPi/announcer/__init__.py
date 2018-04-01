@@ -130,7 +130,6 @@ def drop_multicast_membership(my_socket, multicast_ip):
 
 _announce = False
 def _loop():
-    print ("loop starting")
     global _announce
     # Choose an arbitrary multicast IP and port.
     # 239.255.0.0 - 239.255.255.255 are for local network multicast use.
