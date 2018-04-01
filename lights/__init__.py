@@ -41,11 +41,11 @@ def _animateLoop():
                 else:
                     stopAnimation()
 
-def _setLight(light, state, force=false):
+def _setLight(light, state, force=False):
     light = light % 3
     global _currentState
     global _lights
-    if(_currentState[light] != state | force):
+    if(_currentState[light] != state) or (force == True):
         _lights[light].write(state)
         _currentState[light] = state
 
