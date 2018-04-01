@@ -155,11 +155,11 @@ def _loop():
             
             time.sleep(1)
 
-def start()
+def start():
     global _announce
     _announce = True
     
-def stop()
+def stop():
     global _announce
     _announce = False
 
