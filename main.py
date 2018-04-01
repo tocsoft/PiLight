@@ -65,7 +65,7 @@ def makeSound():
 
 @app.route('/sound/forever')
 def makeSoundForverer():
-    buzzer.start(pattern=[[1,0.25],[0,0.25]], loopCounter=-1)
+    buzzer.start(pattern=[[1,0.25],[0,0.25]])
     return 'strobe'
 
 @app.route('/mute')

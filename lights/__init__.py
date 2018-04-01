@@ -72,7 +72,7 @@ def stop():
     _setLight(2,0, True)
     _run = False
     
-def start(pattern, callBack = None, loopCounter = 1):
+def start(pattern, callBack = None, loopCounter = -1):
     global _patternIndex
     global _pattern
     global _loopCounter
