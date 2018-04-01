@@ -148,7 +148,7 @@ def _loop():
             #message = get_local_ip()
             print (message)
             # Send data. Destination must be a tuple containing the ip and port.
-            my_socket.sendto(message, (multicast_address, multicast_port))
+            my_socket.sendto(message.encode('utf-8'), (multicast_address, multicast_port))
             time.sleep(15)
         else:
             time.sleep(1)
