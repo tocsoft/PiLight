@@ -38,7 +38,7 @@ def _set(state, force=False):
     global _sounder
     if(_currentState != state) or (force == True):
         _sounder.write(state)
-       _currentState = state
+        _currentState = state
 
 def off():
     stopPattern()
