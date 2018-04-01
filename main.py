@@ -53,6 +53,11 @@ def toggleStrobe():
     lights.setAnimation([[1,0,0,0.5],[0,1,0,0.5],[0,0,1,0.5]])
     return 'strobe'
 
+@app.route('/light/bounce')
+def toggleStrobe():
+    lights.setAnimation([[1,0,0,0.5],[0,1,0,0.5],[0,0,1,0.5],[0,1,0,0.5]])
+    return 'strobe'
+
 @app.route('/sound')
 def makeSound():
     buzzer.setPattern(pattern=[[1,0.25],[0,0.5]], loopCounter=5)
