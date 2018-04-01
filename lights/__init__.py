@@ -52,7 +52,7 @@ def stopAnimation():
     _setLight(1,0)
     _setLight(2,0)
     
-def setAnimation(pattern, callBack):
+def setAnimation(pattern, callBack = None):
     stopAnimation()
     _callBack = callBack
     _pattern = pattern
