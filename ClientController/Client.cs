@@ -47,7 +47,7 @@ namespace PiLight.ClientController
                 string strData = Encoding.Unicode.GetString(result.Buffer);
                 // strData == ip addres
 
-                return new Client(new Uri("http://" + strData));
+                return new Client(new Uri("http://" + result.RemoteEndPoint.Address.ToString()));
             }
             catch (SocketException ex) when (ex.SocketErrorCode == SocketError.TimedOut)
             {

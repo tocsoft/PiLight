@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27130.2020
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PiLight.ClientController", "PiLight.ClientController.csproj", "{0E6DB1E2-BC95-46BC-8178-D205B00E2607}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleClient", "SimpleClient.csproj", "{0E6DB1E2-BC95-46BC-8178-D205B00E2607}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PiLight.ClientController", "..\ClientController\PiLight.ClientController.csproj", "{2D717259-AD0B-43BD-AAB0-7272682EB1CC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{0E6DB1E2-BC95-46BC-8178-D205B00E2607}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0E6DB1E2-BC95-46BC-8178-D205B00E2607}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0E6DB1E2-BC95-46BC-8178-D205B00E2607}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2D717259-AD0B-43BD-AAB0-7272682EB1CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2D717259-AD0B-43BD-AAB0-7272682EB1CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2D717259-AD0B-43BD-AAB0-7272682EB1CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2D717259-AD0B-43BD-AAB0-7272682EB1CC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

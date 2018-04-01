@@ -7,17 +7,17 @@ using System.Threading.Tasks;
 
 namespace PiLight.ClientController
 {
-    public class Program
+    public static class Program
     {
         public static void Main()
         {
             var client = Client.Discover().GetAwaiter().GetResult();
 
-            client.TurnOnLight(Lights.Green, true);
+            client.TurnOnLight(Lights.Green, true).GetAwaiter().GetResult(); ;
             Thread.Sleep(5000);
-            client.TurnOnLight(Lights.Amber, true);
+            client.TurnOnLight(Lights.Amber, true).GetAwaiter().GetResult(); ;
             Thread.Sleep(5000);
-            client.TurnOnLight(Lights.Red, true);
+            client.TurnOnLight(Lights.Red, true).GetAwaiter().GetResult(); ;
             Thread.Sleep(5000);
         }
     }
