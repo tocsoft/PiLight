@@ -80,13 +80,18 @@ def setPattern(pattern, callBack = None, loopCounter = -1):
     global _loopCounter
     global _run
     global _callBack
+    global _loopEnabled
+    global _loopPos
     stopPattern()
     _callBack = callBack
     _loopCounter = loopCounter
     _pattern = pattern
     _patternIndex= 0
     _loopPos = 0
-    _loopEnabled = (loopCounter > 0)
+    if(_loopCounter > 0):
+        _loopEnabled = True
+    else:        
+        _loopEnabled = False
     print ("running ", _pattern, " for ", _loopCounter, " iterations")
     _run = True
     
