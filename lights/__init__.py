@@ -15,7 +15,7 @@ _pattern = _offPattern
 _patternIndex = 0 
 _callBack 
 
-def _animateLoop()
+def _animateLoop():
     while True:
         _patternIndex = _patternIndex % len(_pattern)
         entry = _pattern[_patternIndex]
@@ -43,7 +43,7 @@ def _setLight(light, state):
 
 def allOff():
     stopAnimation()
-    
+
 def stopAnimation():
     _callBack = null
     _pattern = _offPattern
