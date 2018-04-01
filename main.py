@@ -3,6 +3,7 @@
 from flask import Flask
 import lights
 import buzzer
+import announcer
 
 
 app = Flask(__name__)
@@ -73,8 +74,8 @@ def mute():
     buzzer.stop()
     return 'muted'
 
-buzzer.stop()
-lights.start([[1,0,0,0.5],[0,1,0,0.5],[0,0,1,0.5]], loopCounter=1)
-
 if __name__ == '__main__':
+    buzzer.stop()
+    lights.start([[1,0,0,0.5],[0,1,0,0.5],[0,0,1,0.5]], loopCounter=1)
+    announcer.start()
     app.run(host='0.0.0.0', port=80)
