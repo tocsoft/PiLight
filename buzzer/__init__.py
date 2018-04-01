@@ -42,13 +42,14 @@ def _loop():
                 else:
                     _tryEndLoop()
 
-def _tryEndLoop()
+def _tryEndLoop():
     global _callBack
     if (_callBack is not None):            
         if (_callBack()):
             _loopPos = 0
         else:
             stopPattern()
+
 
 def _set(state, force=False):
     global _currentState
