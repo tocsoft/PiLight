@@ -43,7 +43,7 @@ def _loop():
                         if (_callBack is not None):            
                             _callBack() # callback is responsible for calling stop after loop count completed
                         else:
-                            stopPattern()
+                            stop()
                 else:
                     # loop forever unless callback stops it
                     if (_callBack is not None):            
@@ -56,20 +56,16 @@ def _set(state, force=False):
         _sounder.write(state)
         _currentState = state
 
-def off():
-    stopPattern()
-    _set(0, True)
-
-def stopPattern():
+def stop():
     global _patternIndex
     global _pattern
     global _callBack
     global _loopCounter
     global _run
-    _set(0)
+    _set(0, True)
     _run = False
     
-def setPattern(pattern, callBack = None, loopCounter = 1):
+def start(pattern, callBack = None, loopCounter = 1):
     global _patternIndex
     global _pattern
     global _loopCounter
