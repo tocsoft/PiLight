@@ -15,6 +15,9 @@ _patternIndex = 0
 _callBack = None
 
 def _animateLoop():
+    global _patternIndex
+    global _pattern
+    global _callBack
     while True:
         _patternIndex = _patternIndex % len(_pattern)
         entry = _pattern[_patternIndex]
