@@ -25,21 +25,22 @@ def _animateLoop():
     global _pattern
     global _callBack
     while True:
-        entry = _pattern[_patternIndex]
-        _setLight(0, entry[0])
-        _setLight(1, entry[1])
-        _setLight(2, entry[2])
-        if(len(entry) == 4):
-            time.sleep(entry[3])
+        if(_patternIndex >= 0):
+            entry = _pattern[_patternIndex]
+            _setLight(0, entry[0])
+            _setLight(1, entry[1])
+            _setLight(2, entry[2])
+            if(len(entry) == 4):
+                time.sleep(entry[3])
 
-        _patternIndex +=1
-        if (len(_pattern) == _patternIndex):
-            _patternIndex = 0
-            if (_callBack is not None):            
-                if (_callBack()):
-                    _patternIndex = 0
-                else:
-                    stopAnimation()
+            _patternIndex +=1
+            if (len(_pattern) == _patternIndex):
+                _patternIndex = 0
+                if (_callBack is not None):            
+                    if (_callBack()):
+                        _patternIndex = 0
+                    else:
+                        stopAnimation()
 
 def _setLight(light, state, force=False):
     light = light % 3
@@ -51,17 +52,21 @@ def _setLight(light, state, force=False):
 
 def allOff():
     stopAnimation()
+    _setLight(0,0, True)
+    _setLight(1,0, True)
+    _setLight(2,0, True)
 
 def stopAnimation():
     global _patternIndex
     global _pattern
     global _callBack
     _callBack = None
+    _patternIndex= -10
     _pattern = _offPattern
     _patternIndex= 0
-    _setLight(0,0, True)
-    _setLight(1,0, True)
-    _setLight(2,0, True)
+    _setLight(0,0)
+    _setLight(1,0)
+    _setLight(2,0)
     
 def setAnimation(pattern, callBack = None):
     global _patternIndex
@@ -69,6 +74,7 @@ def setAnimation(pattern, callBack = None):
     global _callBack
     stopAnimation()
     _callBack = callBack
+    _patternIndex= -10
     _pattern = pattern
     _patternIndex= 0
 

@@ -55,7 +55,8 @@ def toggleStrobe():
 
 def _finishedStrobe():
     lights.allOff()  
-
+    
+lights.allOff()
 lights.setAnimation([[0,0,0,0.5],[1,0,0,0.5],[0,1,0,0.5],[0,0,1,0.5]], _finishedStrobe)
 
 if __name__ == '__main__':
