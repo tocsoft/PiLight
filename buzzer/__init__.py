@@ -49,7 +49,8 @@ def _tryEndLoop():
             _loopPos = 0
         else:
             stopPattern()
-
+    else:
+        stopPattern()
 
 def _set(state, force=False):
     global _currentState
