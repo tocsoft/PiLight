@@ -38,7 +38,6 @@ def _loop():
                 _patternIndex = 0
                 if (_loopEnabled):
                     _loopPos += 1
-                    print("finnished iteration : ", _loopPos, " of ", _loopCounter)
                     if(_loopPos >= _loopCounter):
                         _tryEndLoop()
                 else:
@@ -88,14 +87,8 @@ def setPattern(pattern, callBack = None, loopCounter = -1):
     _pattern = pattern
     _patternIndex= 0
     _loopPos = 0
-    if(_loopCounter > 0):
-        _loopEnabled = True
-    else:        
-        _loopEnabled = False
-    print ("running ", _pattern, " for ", _loopCounter, " iterations")
+    _loopEnabled = (_loopCounter > 0)
     _run = True
-    
-
 
 _thread = threading.Thread(target=_loop, args=())
 _thread.start()
