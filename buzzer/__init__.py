@@ -39,19 +39,15 @@ def _loop():
                 if (_loopEnabled):
                     _loopPos += 1
                     if(_loopPos >= _loopCounter):
-                        _tryEndLoop()
+                        _loopPos = 0
+                        if (_callBack is not None):            
+                            _callBack() # callback is responsible for calling stop after loop count completed
+                        else:
+                            stopPattern()
                 else:
-                    _tryEndLoop()
-
-def _tryEndLoop():
-    global _callBack
-    if (_callBack is not None):            
-        if (_callBack()):
-            _loopPos = 0
-        else:
-            stopPattern()
-    else:
-        stopPattern()
+                    # loop forever unless callback stops it
+                    if (_callBack is not None):            
+                        _callBack()
 
 def _set(state, force=False):
     global _currentState
@@ -73,7 +69,7 @@ def stopPattern():
     _set(0)
     _run = False
     
-def setPattern(pattern, callBack = None, loopCounter = -1):
+def setPattern(pattern, callBack = None, loopCounter = 1):
     global _patternIndex
     global _pattern
     global _loopCounter
