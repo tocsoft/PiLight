@@ -89,10 +89,7 @@ def create_socket(multicast_ip, port):
     # If you bind to a specific interface on the Mac, no multicast data will arrive.
     # If you try to bind to all interfaces on Windows, no multicast data will arrive.
     # Hence the following.
-    if sys.platform.startswith("darwin"):
-        my_socket.bind(('0.0.0.0', port))
-    else:
-        my_socket.bind((local_ip, port))
+    my_socket.bind(('0.0.0.0', port))
 
     return my_socket
 
@@ -131,42 +128,32 @@ def listen_loop(multicast_ip, port):
         print "%s says the time is %s" % (address, data)
 
 _announce = False
-def announce_loop(multicast_ip, port):
-    global _announce
-    # Offset the port by one so that we can send and receive on the same machine
-    my_socket = create_socket(multicast_ip, port)
-
-    # NOTE: Announcing every second, as this loop does, is WAY aggressive. 30 - 60 seconds is usually
-    #       plenty frequent for most purposes.
-    while True:
-        if (_announce):
-            # Just sending Unix time as a message
-            #message = str(time.time())
-
-            message = get_local_ip()
-            print (message)
-            # Send data. Destination must be a tuple containing the ip and port.
-            my_socket.sendto(message, (multicast_ip, port))
-            time.sleep(15)
-        else:
-            time.sleep(1)
 
 def _loop():
+    global _announce
     # Choose an arbitrary multicast IP and port.
     # 239.255.0.0 - 239.255.255.255 are for local network multicast use.
     # Remember, you subscribe to a multicast IP, not a port. All data from all ports
     # sent to that multicast IP will be echoed to any subscribed machine.
     multicast_address = "239.255.4.3"
     multicast_port = 1234
+    # Offset the port by one so that we can send and receive on the same machine
+    my_socket = create_socket(multicast_ip, port+1)
 
-    # When launching this example, you can choose to put it in listen or announce mode.
-    # Announcing doesn't require binding to a port, but we do it here just to reuse code.
-    # It binds to the requested port + 1, allowing you to run the announce and listen modes
-    # on the same machine at the same time.
+    while True:
+        if (_announce):
+            
+            # Just sending Unix time as a message
+            message = str(time.time())
 
-    # In a real case, you'll most likely send and receive from the same port using Gevent or Twisted,
-    # so the code in create_socket() will apply more directly.
-    announce_loop(multicast_address, multicast_port)
+            #message = get_local_ip()
+            print (message)
+            # Send data. Destination must be a tuple containing the ip and port.
+            my_socket.sendto(message, (multicast_ip, port))
+            time.sleep(15)
+        else:
+            
+            time.sleep(1)
 
 def start()
     global _announce
