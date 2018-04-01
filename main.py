@@ -51,7 +51,7 @@ def toggleAllOff():
 def _finishedStrobe():
     lights.allOff()  
 
-lights.setAnimation([[1,0,0,0.5],[0,1,0,0.5],[0,0,1,0.5]], _finishedStrobe)
+lights.setAnimation([[0,0,0,0.5],[1,0,0,0.5],[0,1,0,0.5],[0,0,1,0.5]], _finishedStrobe)
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=80)
