@@ -41,11 +41,11 @@ def _animateLoop():
                 else:
                     stopAnimation()
 
-def _setLight(light, state):
+def _setLight(light, state, force=false):
     light = light % 3
     global _currentState
     global _lights
-    if(_currentState[light] != state):
+    if(_currentState[light] != state | force):
         _lights[light].write(state)
         _currentState[light] = state
 
@@ -59,9 +59,9 @@ def stopAnimation():
     _callBack = None
     _pattern = _offPattern
     _patternIndex= 0
-    _setLight(0,0)
-    _setLight(1,0)
-    _setLight(2,0)
+    _setLight(0,0,true)
+    _setLight(1,0,true)
+    _setLight(2,0,true)
     
 def setAnimation(pattern, callBack = None):
     global _patternIndex
