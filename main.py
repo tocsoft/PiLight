@@ -47,7 +47,7 @@ def toggleAllOff():
     return 'all off'
 
 
-def _finishedStrobe(i, result):
+def _finishedStrobe():
     lights.allOff()  
 
 lights.setAnimation([[1,0,0,0.5],[0,1,0,0.5],[0,0,1,0.5]], _finishedStrobe)

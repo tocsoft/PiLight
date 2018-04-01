@@ -19,7 +19,6 @@ def _animateLoop():
     global _pattern
     global _callBack
     while True:
-        _patternIndex = _patternIndex % len(_pattern)
         entry = _pattern[_patternIndex]
         _setLight(0, entry[0])
         _setLight(1, entry[1])
@@ -29,6 +28,7 @@ def _animateLoop():
 
         _patternIndex +=1
         if (len(_pattern) == _patternIndex):
+            _patternIndex = 0
             if (_callBack is not None):            
                 if (_callBack()):
                     _patternIndex = 0
