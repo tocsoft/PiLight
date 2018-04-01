@@ -58,11 +58,15 @@ def makeSound():
     buzzer.setPattern(pattern=[[1,0.25],[0,0.5]], loopCounter=5)
     return 'strobe'
 
+@app.route('/sound/forever')
+def makeSound():
+    buzzer.setPattern(pattern=[[1,0.25],[0,0.25]], loopCounter=-1)
+    return 'strobe'
+
 @app.route('/mute')
 def mute():
     buzzer.off()
     return 'muted'
-
 
 def _finishedStrobe():
     lights.allOff()  
