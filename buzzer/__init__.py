@@ -23,6 +23,7 @@ def _loop():
     global _pattern
     global _callBack
     global _loopCounter
+    global _loopPos
     global _loopEnabled
     while True:
         if _run:
@@ -37,6 +38,7 @@ def _loop():
                 _patternIndex = 0
                 if (_loopEnabled):
                     _loopPos += 1
+                    print("finnished iteration : ", _loopPos, " of ", _loopCounter)
                     if(_loopPos >= _loopCounter):
                         _tryEndLoop()
                 else:
@@ -85,6 +87,7 @@ def setPattern(pattern, callBack = None, loopCounter = -1):
     _patternIndex= 0
     _loopPos = 0
     _loopEnabled = (loopCounter > 0)
+    print ("running ", _pattern, " for ", _loopCounter, " iterations")
     _run = True
     
 
