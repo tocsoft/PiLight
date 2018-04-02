@@ -140,6 +140,7 @@ def create_sockets(multicast_ip, port):
     Creates a socket, sets the necessary options on it, then binds it. The socket is then returned for use.
     """
     ip_addresses = allIps()
+    print (ip_addresses)
     socketCollection = []
     for local_ip in ip_addresses :
         # create a UDP socket
