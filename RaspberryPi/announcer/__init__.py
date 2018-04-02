@@ -33,7 +33,6 @@ def create_sockets(multicast_ip, port):
     Creates a socket, sets the necessary options on it, then binds it. The socket is then returned for use.
     """
     ip_addresses = nic_info()
-    print (ip_addresses)
     socketCollection = []
     for local_ip in ip_addresses :
         # create a UDP socket
@@ -59,6 +58,7 @@ def create_sockets(multicast_ip, port):
         # If you bind to a specific interface on the Mac, no multicast data will arrive.
         # If you try to bind to all interfaces on Windows, no multicast data will arrive.
         # Hence the following.
+        port += 1
         my_socket.bind((local_ip, port))
         socketCollection.append(my_socket)
 
@@ -74,13 +74,13 @@ def _loop():
     multicast_address = "239.255.4.3"
     multicast_port = 1234
     # Offset the port by one so that we can send and receive on the same machine
-    my_sockets = create_sockets(multicast_address, multicast_port+1)
+    my_sockets = create_sockets(multicast_address, multicast_port)
 
     while True:
         if (_announce):
             # Send data. Destination must be a tuple containing the ip and port.
             for my_socket in my_sockets:
-                my_socket.sendto(bytes([1,2,3,4]), (multicast_address, multicast_port))
+                my_socket.sendto("data".encode('utf8'), (multicast_address, multicast_port))
 
             time.sleep(15)
         else:
