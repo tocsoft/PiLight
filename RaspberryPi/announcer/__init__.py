@@ -76,10 +76,10 @@ def _loop():
     multicast_address = "239.255.4.3"
     multicast_port = 1234
     # Offset the port by one so that we can send and receive on the same machine
-    my_sockets = create_sockets(multicast_address, multicast_port)
 
     while True:
         if (_announce):
+            my_sockets = create_sockets(multicast_address, multicast_port)
             # Send data. Destination must be a tuple containing the ip and port.
             for my_socket in my_sockets:
                 print("sending on",my_socket[1])

@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.NetworkInformation;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
@@ -36,8 +37,40 @@ namespace PiLight.ClientController
 
             client.Client.Bind(localEp);
 
-            IPAddress multicastaddress = IPAddress.Parse("239.255.4.3");
-            client.JoinMulticastGroup(multicastaddress);
+            IPAddress multicastAddress = IPAddress.Parse("239.255.4.3");
+
+            NetworkInterface[] networkInterfaces = NetworkInterface.GetAllNetworkInterfaces();
+
+            foreach (NetworkInterface networkInterface in networkInterfaces)
+            {
+                if ((!networkInterface.Supports(NetworkInterfaceComponent.IPv4)) ||
+                    (networkInterface.OperationalStatus != OperationalStatus.Up))
+                {
+                    continue;
+                }
+
+                IPInterfaceProperties adapterProperties = networkInterface.GetIPProperties();
+                UnicastIPAddressInformationCollection unicastIPAddresses = adapterProperties.UnicastAddresses;
+                IPAddress ipAddress = null;
+
+                foreach (UnicastIPAddressInformation unicastIPAddress in unicastIPAddresses)
+                {
+                    if (unicastIPAddress.Address.AddressFamily != AddressFamily.InterNetwork)
+                    {
+                        continue;
+                    }
+
+                    ipAddress = unicastIPAddress.Address;
+                    break;
+                }
+
+                if (ipAddress == null)
+                {
+                    continue;
+                }
+
+                client.JoinMulticastGroup(multicastAddress, ipAddress);
+            }
 
             client.Client.ReceiveTimeout = (int)timeout.Value.TotalMilliseconds;
             try
