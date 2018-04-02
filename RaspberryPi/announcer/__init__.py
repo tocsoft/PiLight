@@ -128,7 +128,7 @@ def drop_multicast_membership(my_socket, multicast_ip):
 #         data, address = my_socket.recvfrom(4096)
 #         print ("%s says the time is %s" % (address, data))
 
-def allIps()
+def allIps():
     ip_addresses = []
     for x in socket.getaddrinfo(socket.gethostname(), 80):
         for ip in x
