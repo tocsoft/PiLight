@@ -23,9 +23,11 @@ def nic_info():
     for ix in socket.if_nameindex():
         name = ix[1]
         if(name != 'lo') :
-            ip = get_ip_address( name )
-            nic.append(ip)
-
+            try:
+                ip = get_ip_address( name )
+                nic.append(ip)
+            except:
+                print('cannot find ip address for', name)
     return nic
 
 def create_sockets(multicast_ip, port):
