@@ -128,6 +128,14 @@ def drop_multicast_membership(my_socket, multicast_ip):
 #         data, address = my_socket.recvfrom(4096)
 #         print ("%s says the time is %s" % (address, data))
 
+def get_ip_address( NICname ):
+    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    return socket.inet_ntoa(fcntl.ioctl(
+        s.fileno(),
+        0x8915,  # SIOCGIFADDR
+        struct.pack('256s', NICname[:15].encode("UTF-8"))
+    )[20:24])
+    
 def nic_info():
     """
     Return a list with tuples containing NIC and IPv4
