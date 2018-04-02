@@ -11,6 +11,7 @@ import socket
 import time
 import struct
 import threading
+import fcntl
 
 
 def ip_is_local(ip_string):
@@ -135,7 +136,7 @@ def get_ip_address( NICname ):
         0x8915,  # SIOCGIFADDR
         struct.pack('256s', NICname[:15].encode("UTF-8"))
     )[20:24])
-    
+
 def nic_info():
     """
     Return a list with tuples containing NIC and IPv4
