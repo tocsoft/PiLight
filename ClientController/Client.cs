@@ -25,6 +25,12 @@ namespace PiLight.ClientController
 
         public static async Task<Client> Discover(TimeSpan? timeout = null)
         {
+            var usbClientAddress = new Client(new Uri("http://169.254.3.14"));
+            if(await usbClientAddress.TestConnection())
+            {
+                return usbClientAddress;
+            }
+
             timeout = timeout ?? TimeSpan.FromSeconds(30);
 
             UdpClient client = new UdpClient();
@@ -92,6 +98,12 @@ namespace PiLight.ClientController
         {
             var action = flash ? "flash" : "light";
             return this.httpClient.GetAsync($"/{action}/{light.ToString().ToLower()}");
+        }
+
+        private async Task<bool> TestConnection()
+        {
+            var result = await this.httpClient.GetAsync($"/");
+            return result.StatusCode == HttpStatusCode.OK;
         }
     }
     public enum Lights
