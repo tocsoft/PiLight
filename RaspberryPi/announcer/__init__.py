@@ -128,18 +128,25 @@ def drop_multicast_membership(my_socket, multicast_ip):
 #         data, address = my_socket.recvfrom(4096)
 #         print ("%s says the time is %s" % (address, data))
 
-def allIps():
-    ip_addresses = []
-    for x in socket.getaddrinfo(socket.gethostname(), 80):
-        for ip in x :
-            ip_addresses.append(ip)
-    return ip_addresses
+def nic_info():
+    """
+    Return a list with tuples containing NIC and IPv4
+    """
+    nic = []
+
+    for ix in socket.if_nameindex():
+        name = ix[1]
+        if(name != 'lo') :
+            ip = get_ip_address( name )
+            nic.append(ip)
+
+    return nic
 
 def create_sockets(multicast_ip, port):
     """
     Creates a socket, sets the necessary options on it, then binds it. The socket is then returned for use.
     """
-    ip_addresses = allIps()
+    ip_addresses = nic_info()
     print (ip_addresses)
     socketCollection = []
     for local_ip in ip_addresses :
