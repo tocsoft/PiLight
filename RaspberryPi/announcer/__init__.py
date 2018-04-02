@@ -47,7 +47,7 @@ def create_sockets(multicast_ip, port):
         my_socket.setsockopt(socket.IPPROTO_IP, socket.IP_MULTICAST_IF, socket.inet_aton(local_ip))
 
         # Set multicast time-to-live to 2...should keep our multicast packets from escaping the local network
-        my_socket.setsockopt(socket.IPPROTO_IP, socket.IP_MULTICAST_TTL, 2)
+        my_socket.setsockopt(socket.IPPROTO_IP, socket.IP_MULTICAST_TTL, 3)
 
         # Construct a membership request...tells router what multicast group we want to subscribe to
         membership_request = socket.inet_aton(multicast_ip) + socket.inet_aton(local_ip)
