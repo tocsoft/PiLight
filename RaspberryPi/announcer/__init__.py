@@ -131,7 +131,7 @@ def drop_multicast_membership(my_socket, multicast_ip):
 def allIps():
     ip_addresses = []
     for x in socket.getaddrinfo(socket.gethostname(), 80):
-        for ip in x
+        for ip in x :
             ip_addresses.append(ip)
     return ip_addresses
 
