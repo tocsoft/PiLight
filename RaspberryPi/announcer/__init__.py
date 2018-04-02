@@ -21,6 +21,7 @@ def ip_is_local(ip_string):
     combined_regex = "(^10\.)|(^172\.1[6-9]\.)|(^172\.2[0-9]\.)|(^172\.3[0-1]\.)|(^192\.168\.)|(^239\.255\.)"
     return re.match(combined_regex, ip_string) is not None # is not None is just a sneaky way of converting to a boolean
 
+
 def get_local_ip():
     """
     Returns the first externally facing local IP address that it can find.
@@ -62,7 +63,8 @@ def create_socket(multicast_ip, port):
     """
     Creates a socket, sets the necessary options on it, then binds it. The socket is then returned for use.
     """
-    local_ips = [ x[4][0] for x in socket.getaddrinfo(socket.gethostname(), 80) ]
+
+    local_ip = get_local_ip()
 
     # create a UDP socket
     my_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -70,25 +72,24 @@ def create_socket(multicast_ip, port):
     # allow reuse of addresses
     my_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 
-    for ip in local_ips:
-        # set multicast interface to local_ip
-        my_socket.setsockopt(socket.IPPROTO_IP, socket.IP_MULTICAST_IF, socket.inet_aton(ip))
+    # set multicast interface to local_ip
+    my_socket.setsockopt(socket.IPPROTO_IP, socket.IP_MULTICAST_IF, socket.inet_aton(local_ip))
 
-        # Set multicast time-to-live to 2...should keep our multicast packets from escaping the local network
-        my_socket.setsockopt(socket.IPPROTO_IP, socket.IP_MULTICAST_TTL, 2)
+    # Set multicast time-to-live to 2...should keep our multicast packets from escaping the local network
+    my_socket.setsockopt(socket.IPPROTO_IP, socket.IP_MULTICAST_TTL, 2)
 
-        # Construct a membership request...tells router what multicast group we want to subscribe to
-        membership_request = socket.inet_aton(multicast_ip) + socket.inet_aton(ip)
+    # Construct a membership request...tells router what multicast group we want to subscribe to
+    membership_request = socket.inet_aton(multicast_ip) + socket.inet_aton(local_ip)
 
-        # Send add membership request to socket
-        # See http://www.tldp.org/HOWTO/Multicast-HOWTO-6.html for explanation of sockopts
-        my_socket.setsockopt(socket.IPPROTO_IP, socket.IP_ADD_MEMBERSHIP, membership_request)
+    # Send add membership request to socket
+    # See http://www.tldp.org/HOWTO/Multicast-HOWTO-6.html for explanation of sockopts
+    my_socket.setsockopt(socket.IPPROTO_IP, socket.IP_ADD_MEMBERSHIP, membership_request)
 
-        # Bind the socket to an interface.
-        # If you bind to a specific interface on the Mac, no multicast data will arrive.
-        # If you try to bind to all interfaces on Windows, no multicast data will arrive.
-        # Hence the following.
-        my_socket.bind((ip, port))
+    # Bind the socket to an interface.
+    # If you bind to a specific interface on the Mac, no multicast data will arrive.
+    # If you try to bind to all interfaces on Windows, no multicast data will arrive.
+    # Hence the following.
+    my_socket.bind(('0.0.0.0', port))
 
     return my_socket
 
@@ -127,6 +128,43 @@ def drop_multicast_membership(my_socket, multicast_ip):
 #         data, address = my_socket.recvfrom(4096)
 #         print ("%s says the time is %s" % (address, data))
 
+
+
+def create_sockets(multicast_ip, port):
+    """
+    Creates a socket, sets the necessary options on it, then binds it. The socket is then returned for use.
+    """
+    ip_addresses = [ x[4][0] for x in socket.getaddrinfo(socket.gethostname(), 80) ]
+    socketCollection = []
+    for local_ip in ip_addresses :
+        # create a UDP socket
+        my_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+
+        # allow reuse of addresses
+        my_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+
+        # set multicast interface to local_ip
+        my_socket.setsockopt(socket.IPPROTO_IP, socket.IP_MULTICAST_IF, socket.inet_aton(local_ip))
+
+        # Set multicast time-to-live to 2...should keep our multicast packets from escaping the local network
+        my_socket.setsockopt(socket.IPPROTO_IP, socket.IP_MULTICAST_TTL, 2)
+
+        # Construct a membership request...tells router what multicast group we want to subscribe to
+        membership_request = socket.inet_aton(multicast_ip) + socket.inet_aton(local_ip)
+
+        # Send add membership request to socket
+        # See http://www.tldp.org/HOWTO/Multicast-HOWTO-6.html for explanation of sockopts
+        my_socket.setsockopt(socket.IPPROTO_IP, socket.IP_ADD_MEMBERSHIP, membership_request)
+
+        # Bind the socket to an interface.
+        # If you bind to a specific interface on the Mac, no multicast data will arrive.
+        # If you try to bind to all interfaces on Windows, no multicast data will arrive.
+        # Hence the following.
+        my_socket.bind((local_ip, port))
+        socketCollection.append(my_socket)
+
+    return socketCollection
+
 _announce = False
 def _loop():
     global _announce
@@ -137,15 +175,14 @@ def _loop():
     multicast_address = "239.255.4.3"
     multicast_port = 1234
     # Offset the port by one so that we can send and receive on the same machine
-    my_socket = create_socket(multicast_address, multicast_port+1)
+    my_sockets = create_sockets(multicast_address, multicast_port+1)
 
     while True:
         if (_announce):
-            # Just sending Unix time as a message
-            # message = str(time.time())
-            message = str(get_local_ip())
             # Send data. Destination must be a tuple containing the ip and port.
-            my_socket.sendto(message.encode('utf-8'), (multicast_address, multicast_port))
+            for my_socket in my_sockets:
+                my_socket.sendto(bytes([1,2,3,4]), (multicast_address, multicast_port))
+
             time.sleep(15)
         else:
             time.sleep(1)
