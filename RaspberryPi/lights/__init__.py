@@ -68,6 +68,7 @@ def _setLight(light, state, force=False):
 def stop():
     global _run
     global _callBack
+    _callBack = None
     _run = False
     _setLight(0,0, True)
     _setLight(1,0, True)
