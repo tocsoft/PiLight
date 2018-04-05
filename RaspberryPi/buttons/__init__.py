@@ -73,7 +73,6 @@ def _loop():
         _lastState = current
 
 def triggerEvent(button, event):
-    print ("triggering", event, "on button ", button)
     global _downTime
     _downTime[button] = 0
     if event == 'longPress':
