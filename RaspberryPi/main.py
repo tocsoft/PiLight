@@ -80,12 +80,12 @@ def buttonPress(button, event):
     
 if __name__ == '__main__':
     
-    buttons.onShortPress(0, buttonPress)
-    buttons.onShortPress(1, buttonPress)
-    buttons.onShortPress(2, buttonPress)
-    buttons.onLongPress(0, buttonPress)
-    buttons.onLongPress(1, buttonPress)
-    buttons.onLongPress(2, buttonPress)
+    # buttons.onShortPress(0, buttonPress)
+    # buttons.onShortPress(1, buttonPress)
+    # buttons.onShortPress(2, buttonPress)
+    # buttons.onLongPress(0, buttonPress)
+    # buttons.onLongPress(1, buttonPress)
+    # buttons.onLongPress(2, buttonPress)
 
     buzzer.stop()
     lights.start([[1,0,0,0.5],[0,1,0,0.5],[0,0,1,0.5]], loopCounter=1)
