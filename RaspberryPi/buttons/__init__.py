@@ -56,7 +56,6 @@ def _loop():
         currentTime = time.clock()
         for x in range(0, 3):
             if current[x] != _state[x]:
-                _state[x] = currentTime
                 _state[x] = current[x]
                 if(_state[x] == 1):
                     # changed from unpressed to 0
@@ -74,6 +73,7 @@ def _loop():
         _lastState = current
 
 def triggerEvent(button, event):
+    print ("triggering", event, "on button ", button)
     global _downTime
     _downTime[button] = 0
     if event == 'longPress':
