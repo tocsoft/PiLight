@@ -64,9 +64,9 @@ def _loop():
                 _lastChanged[x] = currentTime
             dif = currentTime - _lastChanged[x]
             if dif  > _debounceLimit :
-                print ("debounced button:", x, " after:", dif)
+              #  print ("debounced button:", x, " after:", dif)
                 if current[x] != _state[x]:
-                    print ("setting actual state for button:", x, " to ", current[x])
+               #     print ("setting actual state for button:", x, " to ", current[x])
                     _state[x] = current[x]
                     if(_state[x] == 1):
                         print ("button:", x, " pressed")
