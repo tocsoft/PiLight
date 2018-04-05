@@ -82,7 +82,6 @@ def _loop():
             my_sockets = create_sockets(multicast_address, multicast_port)
             # Send data. Destination must be a tuple containing the ip and port.
             for my_socket in my_sockets:
-                print("sending on",my_socket[1])
                 my_socket[0].sendto("data".encode('utf8'), (multicast_address, multicast_port))
 
             time.sleep(15)

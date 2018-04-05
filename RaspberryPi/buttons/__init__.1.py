@@ -60,24 +60,17 @@ def _loop():
         currentTime = time.clock()
         for x in range(0, 3):
             if current[x] != _lastState[x]:
-                print ("last state changed, button:", x, "state:", current[x])
                 _lastChanged[x] = currentTime
-            dif = currentTime - _lastChanged[x]
-            if dif  > _debounceLimit :
-                print ("debounced button:", x, " after:", dif)
+            if (currentTime - _lastChanged[x]) > _debounceLimit :
                 if current[x] != _state[x]:
-                    print ("setting actual state for button:", x, " to ", current[x])
                     _state[x] = current[x]
                     if(_state[x] == 1):
-                        print ("button:", x, " pressed")
                         # changed from unpressed to 0
                         _downTime[x] = currentTime
                         _upTime[x] = 0
                         _eventWaiting[x] = 1
                     else:
-                        print ("button:", x, " released")
                         _upTime[x] = 1
-
             if _eventWaiting[x] :
                 if _upTime[x] == 0: # we are holding down
                     if _downTime[x] > _longPressLimit :
