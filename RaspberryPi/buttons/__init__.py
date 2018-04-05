@@ -21,7 +21,7 @@ _downTime = [
     _startTime 
 ]
 _upTime = [
-    0
+    0,
     0,
     0
 ]
