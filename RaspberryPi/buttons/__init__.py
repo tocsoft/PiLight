@@ -7,6 +7,10 @@ _state = [
     0,
     0,
     0
+]_lastState = [
+    0,
+    0,
+    0
 ]
 _startTime = time.clock()
 # so we delay before seeing a 
@@ -35,6 +39,8 @@ _debounceLimit = 10
 _longPressLimit = 1000
 
 def _loop():
+    global _state
+    global _lastState
     global _startTime
     global _lastChanged
     global _debounceLimit
@@ -52,13 +58,47 @@ def _loop():
         ]
         currentTime = time.clock()
         for x in range(0, 3):
-            if current[x] != _state[x]:
+            if current[x] != _lastState[x]:
                 _lastChanged[x] = currentTime
             if (currentTime - _lastChanged[x]) > _debounceLimit :
                 if current[x] != _state[x]:
                     _state[x] = current[x]
-                    print ('button', x, 'is', _state[x] )
-        
+                    if(_state[x] == 1):
+                        # changed from unpressed to 0
+                        _downTime[x] = currentTime
+                        _upTime[x] = 0
+                        _eventWaiting[x] = 1
+                    else:
+                        _upTime[x] = 1
+            if _eventWaiting[x] :
+                if _upTime[x] == 0: # we are holding down
+                    if _downTime[x] > _longPressLimit :
+                        triggerEvent(x, 'longPress')
+                else:
+                    triggerEvent(x, 'press')
+        _lastState = current
+
+def triggerEvent(button, event):
+    global _eventWaiting
+    _eventWaiting[x] = 0
+    if event == 'longPress':
+        if _longPressCallBacks[button] != None:
+            _longPressCallBacks[button](button, event)
+    else:
+        if _shortPressCallBacks[button] != None:
+            _shortPressCallBacks[button](button, event)
+
+_longPressCallBacks = [
+    None,None,None
+]
+_shortPressCallBacks = [
+    None,None,None
+]
+
+def onLongPress(button, callBack):
+    _longPressCallBacks[button] = callBack
+def onShortPress(button, callBack):
+    _shortPressCallBacks[button] = callBack
 
 _thread = threading.Thread(target=_loop, args=())
 _thread.start()
