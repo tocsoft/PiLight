@@ -21,7 +21,7 @@ _callBack = None
 _run = False
 _loopEnabled  = False
 _insideLoop  = False
-
+_enqueuedEvent = None
 
 def _loop():
     global _patternIndex
@@ -32,7 +32,7 @@ def _loop():
     global _loopPos
     global _loopEnabled
     global _insideLoop
-    enqueuedEvent = None
+    global _enqueuedEvent
     while True:
         _insideLoop = False
         if _run:
@@ -79,6 +79,7 @@ def stop():
     global _insideLoop
     _callBack = None
     _run = False
+    _enqueuedEvent = None
     # wait for loop to break
     while _insideLoop:
         time.sleep(0.001)
