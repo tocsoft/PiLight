@@ -99,6 +99,7 @@ def mute():
 
 paused = False
 def buttonLongPress(button, event):
+    print ("long press")
     global lastLightAction    
     global paused
     if paused:
@@ -106,10 +107,12 @@ def buttonLongPress(button, event):
        paused = False
     else :
         if lastLightAction != None:
+            print ("pausing")
             paused  = True
             lights.stop()
     
 def buttonPress(button, event):
+    print ("press")
     mute()
     
 if __name__ == '__main__':
