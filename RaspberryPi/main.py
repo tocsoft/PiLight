@@ -110,10 +110,15 @@ def buttonLongPress(button, event):
             print ("pausing")
             paused  = True
             lights.stop()
+        else:
+            wakeUpFlash()
     
 def buttonPress(button, event):
     print ("press")
     mute()
+
+def wakeUpFlash():
+    lights.start([[1,0,0,0.5],[0,1,0,0.5],[0,0,1,0.5]], loopCounter=1)
     
 if __name__ == '__main__':
     
@@ -121,6 +126,6 @@ if __name__ == '__main__':
     buttons.onLongPress(0, buttonLongPress)
 
     buzzer.stop()
-    lights.start([[1,0,0,0.5],[0,1,0,0.5],[0,0,1,0.5]], loopCounter=1)
+    wakeUpFlash()
     announcer.start()
     app.run(host='0.0.0.0', port=80)
