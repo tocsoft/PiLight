@@ -7,7 +7,8 @@ _state = [
     0,
     0,
     0
-]_lastState = [
+]
+_lastState = [
     0,
     0,
     0
