@@ -58,9 +58,9 @@ def _loop():
             automationhat.input.three.read()
         ]
         currentTime = time.clock()
-        print ("diffs:", x, "state:", current[x])
         for x in range(0, 3):
             if current[x] != _state[x]:
+                _state[x] = currentTime
                 print ("setting actual state for button:", x, " to ", current[x])
                 _state[x] = current[x]
                 if(_state[x] == 1):
