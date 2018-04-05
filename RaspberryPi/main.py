@@ -104,7 +104,7 @@ def buttonLongPress(button, event):
     if paused:
        lastLightAction()
        paused = False
-    else 
+    else :
         if lastLightAction != None:
             paused  = True
             lights.stop()
