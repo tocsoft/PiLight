@@ -20,6 +20,7 @@ _loopPos = 0
 _callBack = None
 _run = False
 _loopEnabled  = False
+_insideLoop  = False
 
 
 def _loop():
@@ -30,9 +31,11 @@ def _loop():
     global _loopCounter
     global _loopPos
     global _loopEnabled
+    global _insideLoop
     
     while True:
         if _run:
+            _insideLoop = True
             entry = _pattern[_patternIndex]
             _setLight(0, entry[0])
             _setLight(1, entry[1])
@@ -56,6 +59,7 @@ def _loop():
                     # loop forever unless callback stops it
                     if (_callBack is not None):            
                         _callBack()
+            _insideLoop = False
           
 def _setLight(light, state, force=False):
     light = light % 3
@@ -68,8 +72,13 @@ def _setLight(light, state, force=False):
 def stop():
     global _run
     global _callBack
+    global _insideLoop
     _callBack = None
     _run = False
+    # wait for loop to break
+    while _insideLoop:
+        time.sleep(0.001)
+
     _setLight(0,0, True)
     _setLight(1,0, True)
     _setLight(2,0, True)
@@ -90,7 +99,6 @@ def start(pattern, callBack = None, loopCounter = -1):
     _loopPos = 0
     _loopEnabled = (_loopCounter > 0)
     _run = True
-
 
 
 _thread = threading.Thread(target=_loop, args=())
