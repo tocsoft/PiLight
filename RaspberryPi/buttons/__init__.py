@@ -61,15 +61,12 @@ def _loop():
         for x in range(0, 3):
             if current[x] != _state[x]:
                 _state[x] = currentTime
-                print ("setting actual state for button:", x, " to ", current[x], " @ ", currentTime)
                 _state[x] = current[x]
                 if(_state[x] == 1):
-                    print ("button:", x, " pressed")
                     # changed from unpressed to 0
                     _downTime[x] = currentTime
                     _upTime[x] = 0
                 else:
-                    print ("button:", x, " released")
                     _upTime[x] = 1
 
             if _downTime[x] != 0 :
