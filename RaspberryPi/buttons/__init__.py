@@ -36,8 +36,8 @@ _eventWaiting= [
     0,
     0
 ]
-_debounceLimit = 10
-_longPressLimit = 1000
+_debounceLimit = 0.01
+_longPressLimit = 1
 
 def _loop():
     global _state
