@@ -50,7 +50,15 @@ def _loop():
             automationhat.input.two.read(),
             automationhat.input.three.read()
         ]
-        print (current)
+        currentTime = time.clock()
+        for x in range(0, 3):
+            if current[x] != _state[x]:
+                _lastChanged[x] = currentTime
+            if (currentTime - _lastChanged[x]) > _debounceLimit :
+                if current[x] != _state[x]:
+                    _state[x] = current[x]
+                    print ('button', x, 'is', _state[x] )
         
+
 _thread = threading.Thread(target=_loop, args=())
 _thread.start()
