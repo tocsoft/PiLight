@@ -39,7 +39,7 @@ def _loop():
             if _enqueuedEvent != None:
                 _enqueuedEvent()
                 _enqueuedEvent = None
-
+        if _run:
             _insideLoop = True
             entry = _pattern[_patternIndex]
             _setLight(0, entry[0])
