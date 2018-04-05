@@ -67,10 +67,11 @@ def _setLight(light, state, force=False):
 
 def stop():
     global _run
+    global _callBack
+    _run = False
     _setLight(0,0, True)
     _setLight(1,0, True)
     _setLight(2,0, True)
-    _run = False
     
 def start(pattern, callBack = None, loopCounter = -1):
     global _patternIndex
