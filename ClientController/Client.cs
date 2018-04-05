@@ -13,14 +13,11 @@ namespace PiLight.ClientController
 {
     public class Client
     {
-        private HttpClient httpClient;
-
+        private readonly Uri uri;
+        
         public Client(Uri uri)
         {
-            this.httpClient = new HttpClient()
-            {
-                BaseAddress = uri
-            };
+            this.uri = uri;
         }
 
         public static async Task<Client> Discover(TimeSpan? timeout = null)
@@ -94,16 +91,22 @@ namespace PiLight.ClientController
             }
         }
 
-        public Task TurnOnLight(Lights light, bool flash = false)
+        public async Task TurnOnLight(Lights light, bool flash = false)
         {
             var action = flash ? "flash" : "light";
-            return this.httpClient.GetAsync($"/{action}/{light.ToString().ToLower()}");
+            using (var client = new HttpClient() { BaseAddress = this.uri })
+            {
+                await client.GetAsync($"/{action}/{light.ToString().ToLower()}");
+            }
         }
 
         private async Task<bool> TestConnection()
         {
-            var result = await this.httpClient.GetAsync($"/");
-            return result.StatusCode == HttpStatusCode.OK;
+            using (var client = new HttpClient() { BaseAddress = this.uri })
+            {
+                var result = await client.GetAsync($"/");
+                return result.StatusCode == HttpStatusCode.OK;
+            }
         }
     }
     public enum Lights
