@@ -34,10 +34,10 @@ def _loop():
     global _insideLoop
     enqueuedEvent = None
     while True:
-        if enqueuedEvent != None
+        if enqueuedEvent != None:
             enqueuedEvent()
             enqueuedEvent = None
-            
+
         _insideLoop = False
         if _run:
             _insideLoop = True
