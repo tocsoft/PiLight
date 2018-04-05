@@ -31,13 +31,9 @@ _upTime = [
     0
 ]
 
-_eventWaiting= [
-    0,
-    0,
-    0
-]
 _debounceLimit = 0.01
-_longPressLimit = 1
+
+_longPressLimit = 0.75
 
 def _loop():
     global _state
@@ -47,7 +43,7 @@ def _loop():
     global _debounceLimit
     global _downTime
     global _upTime
-    global _eventWaiting
+    global _pressCounter
     global _longPressLimit
 
     while True:
@@ -67,7 +63,7 @@ def _loop():
                     _downTime[x] = currentTime
                     _upTime[x] = 0
                 else:
-                    _upTime[x] = 1
+                    _upTime[x] = currentTime
 
             if _downTime[x] != 0 :
                 if _upTime[x] == 0: # we are holding down
