@@ -34,12 +34,12 @@ def _loop():
     global _insideLoop
     enqueuedEvent = None
     while True:
-        if enqueuedEvent != None:
-            enqueuedEvent()
-            enqueuedEvent = None
-
         _insideLoop = False
         if _run:
+            if enqueuedEvent != None:
+                enqueuedEvent()
+                enqueuedEvent = None
+
             _insideLoop = True
             entry = _pattern[_patternIndex]
             _setLight(0, entry[0])
