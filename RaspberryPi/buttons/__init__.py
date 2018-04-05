@@ -21,9 +21,9 @@ _lastChanged = [
     _startTime 
 ]
 _downTime = [
-    _startTime ,
-    _startTime ,
-    _startTime 
+    0 ,
+    0 ,
+    0 
 ]
 _upTime = [
     0,
