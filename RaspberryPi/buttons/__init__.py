@@ -83,7 +83,7 @@ def _loop():
 
 def triggerEvent(button, event):
     global _eventWaiting
-    _eventWaiting[x] = 0
+    _eventWaiting[button] = 0
     if event == 'longPress':
         if _longPressCallBacks[button] != None:
             _longPressCallBacks[button](button, event)
