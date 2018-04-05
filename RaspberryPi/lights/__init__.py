@@ -32,8 +32,13 @@ def _loop():
     global _loopPos
     global _loopEnabled
     global _insideLoop
-    
+    enqueuedEvent = None
     while True:
+        if enqueuedEvent != None
+            enqueuedEvent()
+            enqueuedEvent = None
+            
+        _insideLoop = False
         if _run:
             _insideLoop = True
             entry = _pattern[_patternIndex]
@@ -51,15 +56,14 @@ def _loop():
                     _loopPos += 1
                     if(_loopPos >= _loopCounter):
                         _loopPos = 0
-                        if (_callBack is not None):            
-                            _callBack() # callback is responsible for calling stop after loop count completed
+                        if (_callBack is not None):      
+                            enqueuedEvent  = _callBack # callback is responsible for calling stop after loop count completed
                         else:
-                            stop()
+                            enqueuedEvent  = stop
                 else:
                     # loop forever unless callback stops it
-                    if (_callBack is not None):            
-                        _callBack()
-            _insideLoop = False
+                    if (_callBack is not None):       
+                        enqueuedEvent  = _callBack     
           
 def _setLight(light, state, force=False):
     light = light % 3
