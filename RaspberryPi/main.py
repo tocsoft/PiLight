@@ -111,6 +111,7 @@ def buttonLongPress(button, event):
             lights.stop()
     
 def buttonPress(button, event):
+    lights.stop()
     mute()
     
 if __name__ == '__main__':
