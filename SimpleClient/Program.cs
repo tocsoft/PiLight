@@ -9,16 +9,16 @@ namespace PiLight.ClientController
 {
     public static class Program
     {
-        public static void Main()
+        public static async Task Main()
         {
-            var client = Client.Discover().GetAwaiter().GetResult();
+            var client = await Client.Discover();
 
-            client.TurnOnLight(Lights.Green, true).GetAwaiter().GetResult(); ;
-            Thread.Sleep(5000);
-            client.TurnOnLight(Lights.Amber, true).GetAwaiter().GetResult(); ;
-            Thread.Sleep(5000);
-            client.TurnOnLight(Lights.Red, true).GetAwaiter().GetResult(); ;
-            Thread.Sleep(5000);
+            await client.TurnOnLight(Lights.Green, true);
+            await Task.Delay(5000);
+            await client.TurnOnLight(Lights.Amber, true);
+            await Task.Delay(5000);
+            await client.TurnOnLight(Lights.Red, true);
+            await Task.Delay(5000);
         }
     }
 }

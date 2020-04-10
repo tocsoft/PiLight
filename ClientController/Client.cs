@@ -102,10 +102,17 @@ namespace PiLight.ClientController
 
         private async Task<bool> TestConnection()
         {
-            using (var client = new HttpClient() { BaseAddress = this.uri })
+            try
             {
-                var result = await client.GetAsync($"/");
-                return result.StatusCode == HttpStatusCode.OK;
+                using (var client = new HttpClient() { BaseAddress = this.uri })
+                {
+                    var result = await client.GetAsync($"/");
+                    return result.StatusCode == HttpStatusCode.OK;
+                }
+            }
+            catch
+            {
+                return false;
             }
         }
     }
