@@ -2,6 +2,7 @@
 
 from flask import Flask
 from flask import request
+from flask import jsonify
 import lights
 import buzzer
 import buttons
@@ -14,7 +15,14 @@ lastLightAction = None
 
 @app.route('/')
 def index():
-    return 'Hello world'
+    global paused
+    return jsonify(
+        red=lights.getLight(0),
+        amber=lights.getLight(1),
+        green=lights.getLight(2),
+        paused=paused,
+        sound=buzzer.sounding()
+    )
 
 @app.route('/light/red')
 def toggleRed():

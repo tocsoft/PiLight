@@ -55,6 +55,11 @@ def _set(state, force=False):
     if(_currentState != state) or (force == True):
         _sounder.write(state)
         _currentState = state
+        
+
+def sounding():
+    global _run
+    return _run
 
 def stop():
     global _patternIndex

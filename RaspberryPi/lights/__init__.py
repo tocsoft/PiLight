@@ -73,6 +73,11 @@ def _setLight(light, state, force=False):
         _lights[light].write(state)
         _currentState[light] = state
 
+def getLight(light):
+    light = light % 3
+    global _currentState
+    return _currentState[light]
+
 def stop():
     global _run
     global _callBack
