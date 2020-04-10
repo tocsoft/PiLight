@@ -137,24 +137,21 @@ def mute():
     return 'muted'
     
 @app.route('/pause')
-def makeButtonLongPress():
+def pause():
+    global lastLightAction    
+    global paused
+    print ("pausing")
+    paused  = True
+    lights.stop()
+    return 'paused'
+        
+@app.route('/unpause')
+def unpause():
     global lastLightAction    
     global paused
     if paused:
        paused = False
        lastLightAction()
-    return 'paused'
-        
-@app.route('/unpause')
-def makeButtonLongPress():
-    global lastLightAction    
-    global paused
-    if lastLightAction != None:
-        print ("pausing")
-        paused  = True
-        lights.stop()
-    else:
-        wakeUpFlash()
     return 'unpaused'
 
 paused = False
