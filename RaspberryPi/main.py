@@ -17,11 +17,11 @@ lastLightAction = None
 def index():
     global paused
     return jsonify(
-        red=lights.getLight(0),
-        amber=lights.getLight(1),
-        green=lights.getLight(2),
-        paused=paused,
-        sound=buzzer.sounding()
+        red=bool(lights.getLight(0)),
+        amber=bool(lights.getLight(1)),
+        green=bool(lights.getLight(2)),
+        paused=bool(paused),
+        sound=bool(buzzer.sounding())
     )
 
 @app.route('/light/red')
