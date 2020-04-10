@@ -21,7 +21,7 @@ def toggleRed():
     global lastLightAction
     global paused
     if request.args.get('force'):
-        paused = false
+        paused = False
     if lastLightAction != flashRed:
         lastLightAction = toggleRed    
     if paused == False:
@@ -33,7 +33,7 @@ def flashRed():
     global lastLightAction
     global paused
     if request.args.get('force'):
-        paused = false
+        paused = False
     lastLightAction = flashRed
     # flash twice then show solid red
     if paused == False:
@@ -45,7 +45,7 @@ def toggleAmber():
     global lastLightAction
     global paused
     if request.args.get('force'):
-        paused = false
+        paused = False
     if lastLightAction != flashamber:
         lastLightAction = toggleAmber
     if paused == False:
@@ -57,7 +57,7 @@ def flashamber():
     global lastLightAction
     global paused
     if request.args.get('force'):
-        paused = false
+        paused = False
     lastLightAction = flashamber
     if paused == False:
         lights.start([[0,0,0,0.5],[0,1,0,0.5],[0,0,0,0.5],[0,1,0,0.5],[0,0,0,0.5]],toggleAmber )
@@ -68,7 +68,7 @@ def toggleGreen():
     global lastLightAction
     global paused
     if request.args.get('force'):
-        paused = false
+        paused = False
     if lastLightAction != flashgreen:
         lastLightAction = toggleGreen
     if paused == False:
@@ -80,7 +80,7 @@ def flashgreen():
     global lastLightAction
     global paused
     if request.args.get('force'):
-        paused = false
+        paused = False
     lastLightAction = flashgreen
     if paused == False:
         lights.start([[0,0,0,0.5],[0,0,1,0.5],[0,0,0,0.5],[0,0,1,0.5],[0,0,0,0.5]],toggleGreen)
@@ -97,7 +97,7 @@ def toggleStrobe():
     global lastLightAction
     global paused
     if request.args.get('force'):
-        paused = false
+        paused = False
     lastLightAction = toggleStrobe
     if paused == False:
         lights.start([[1,0,0,0.5],[0,1,0,0.5],[0,0,1,0.5]])
@@ -108,7 +108,7 @@ def toggleBounce():
     global lastLightAction
     global paused
     if request.args.get('force'):
-        paused = false
+        paused = False
     lastLightAction = toggleBounce
     if paused == False:
         lights.start([[1,0,0,0.5],[0,1,0,0.25],[0,0,1,0.5],[0,1,0,0.25]])
@@ -118,7 +118,7 @@ def toggleBounce():
 def makeSound():
     global paused
     if request.args.get('force'):
-        paused = false
+        paused = False
     if paused == False:
         buzzer.start(pattern=[[1,0.25],[0,0.5]], loopCounter=5)
     return 'strobe'
@@ -127,7 +127,7 @@ def makeSound():
 def makeSoundForverer():
     global paused
     if request.args.get('force'):
-        paused = false
+        paused = False
     if paused == False:
         buzzer.start(pattern=[[1,0.25],[0,0.25]])
     return 'strobe'
