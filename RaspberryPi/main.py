@@ -192,11 +192,11 @@ def buttonPress(button, event):
         if lightOn == 0:
             toggleAllOff()
         if lightOn == 1:
-            toggleRed()
+            lights.start([[1,0,0]])
         if lightOn == 2:
-            toggleAmber()
+            lights.start([[0,1,0]])
         if lightOn == 3:
-            toggleGreen()
+            lights.start([[0,0,1]])
     print ("press")
 
 def wakeUpFlash():
