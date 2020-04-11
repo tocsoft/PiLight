@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -14,7 +15,7 @@ namespace PiLight.ClientController
     public class Client
     {
         private readonly Uri uri;
-        
+
         public Client(Uri uri)
         {
             this.uri = uri;
@@ -23,7 +24,7 @@ namespace PiLight.ClientController
         public static async Task<Client> Discover(TimeSpan? timeout = null)
         {
             var usbClientAddress = new Client(new Uri("http://169.254.3.14"));
-            if(await usbClientAddress.TestConnection())
+            if (await usbClientAddress.TestConnection())
             {
                 return usbClientAddress;
             }
@@ -91,15 +92,42 @@ namespace PiLight.ClientController
             }
         }
 
+        public async Task<StatusInfo> GetStatus()
+        {
+            using (var client = new HttpClient() { BaseAddress = this.uri })
+            {
+                var result = await client.GetAsync($"/");
+                result.EnsureSuccessStatusCode();
+                var json = await result.Content.ReadAsStringAsync();
+                return JsonConvert.DeserializeObject<StatusInfo>(json);
+            }
+        }
         public async Task TurnOnLight(Lights light, bool flash = false)
         {
             var action = flash ? "flash" : "light";
             using (var client = new HttpClient() { BaseAddress = this.uri })
             {
-                await client.GetAsync($"/{action}/{light.ToString().ToLower()}");
+                await client.GetAsync($"/{action}/{light.ToString().ToLower()}?force=true");
             }
         }
 
+        public async Task TurnOffAllLights()
+        {
+            using (var client = new HttpClient() { BaseAddress = this.uri })
+            {
+                var result = await client.GetAsync($"/light/off");
+                result.EnsureSuccessStatusCode();
+            }
+        }
+        public async Task Unpause()
+        {
+            using (var client = new HttpClient() { BaseAddress = this.uri })
+            {
+                var result = await client.GetAsync($"/unpause");
+                result.EnsureSuccessStatusCode();
+            }
+        }
+        
         private async Task<bool> TestConnection()
         {
             try
@@ -107,6 +135,7 @@ namespace PiLight.ClientController
                 using (var client = new HttpClient() { BaseAddress = this.uri })
                 {
                     var result = await client.GetAsync($"/");
+                    result.EnsureSuccessStatusCode();
                     return result.StatusCode == HttpStatusCode.OK;
                 }
             }
@@ -121,5 +150,14 @@ namespace PiLight.ClientController
         Red,
         Amber,
         Green
+    }
+
+    public class StatusInfo
+    {
+        public bool Amber { get; set; }
+        public bool Green { get; set; }
+        public bool Red { get; set; }
+        public bool Pasued { get; set; }
+        public bool Sound { get; set; }
     }
 }
