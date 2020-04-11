@@ -178,14 +178,26 @@ def buttonLongPress(button, event):
             lights.stop()
         else:
             wakeUpFlash()
-    
+
+lightOn = 0
 def buttonPress(button, event):
     global paused
-    if paused:
-        paused = False
-        lastLightAction()
+    global lightOn
+    paused = False
+    if buzzer.sounding():
+        mute()
+    else:
+        lightOn = lightOn + 1
+        lightOn = lightOn % 4
+        if lightOn == 0:
+            toggleAllOff()
+        if lightOn == 1:
+            toggleRed()
+        if lightOn == 2:
+            toggleAmber()
+        if lightOn == 3:
+            toggleGreen()
     print ("press")
-    mute()
 
 def wakeUpFlash():
     lights.start([[1,0,0,0.5],[0,1,0,0.5],[0,0,1,0.5]], loopCounter=1)
