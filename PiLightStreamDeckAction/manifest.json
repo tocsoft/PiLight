@@ -1,11 +1,11 @@
 {
   "Actions": [
     {
-      "Icon": "images/category/categoryIcon",
+      "Icon": "images/allOn@2x",
       "Name": "Switch Light",
       "States": [
         {
-          "Image": "images/allOn",
+          "Image": "images/allOn@2x",
           "TitleAlignment": "bottom",
           "FontSize": "16"
         }
@@ -16,7 +16,7 @@
     }
   ],
   "Category": "PiLight",
-  "CategoryIcon": "images/category/categoryIcon",
+  "CategoryIcon": "images/allOn@2x",
   "Disabled": false,
   "Author": "Scott Williams",
   "CodePathWin": "PiLightStreamDeckAction.exe",
@@ -24,7 +24,7 @@
   "PropertyInspectorPath": "property_inspector/property_inspector.html",
   "Description": "Description of MyPlugin.",
   "Name": "PiLight Control",
-  "Icon": "images/category/categoryIcon",
+  "Icon": "images/allOn@2x",
   "URL": "https://github.com/tocsoft/PiLight",
   "Version": "1.0",
   "SDKVersion": 2,
