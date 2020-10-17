@@ -11,8 +11,8 @@
         }
       ],
       "SupportedInMultiActions": true,
-      "Tooltip": "Toggle PiLight light on or off",
-      "UUID": "tocsoft.streamdeck.pilight.switch"
+      "Tooltip": "Toggle openhab light on or off",
+      "UUID": "tocsoft.streamdeck.openhab.switch"
     }
   ],
   "Category": "PiLight",

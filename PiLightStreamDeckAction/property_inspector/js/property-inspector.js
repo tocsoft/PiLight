@@ -5,10 +5,9 @@ var websocket = null,
     inInfo = null,
     actionInfo = {},
     settingsModel = {
-        PersonalAccessToken: "",
-        Organisation: "",
-        Project: "",
-        OpenPRs: 0
+        IPAddress: "",
+        ItemName: "",
+        ButtonItemName: ""
     };
 
 var settingKeys = Object.keys(settingsModel);

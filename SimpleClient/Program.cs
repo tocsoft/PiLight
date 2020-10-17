@@ -11,8 +11,8 @@ namespace PiLight.ClientController
     {
         public static async Task Main()
         {
-            var client = await Client.Discover();
-
+            //var client = await Client.Discover();
+            var client = new Client(new Uri("http://192.168.0.248"));
             await client.TurnOnLight(Lights.Green, true);
             await Task.Delay(5000);
             await client.TurnOnLight(Lights.Amber, true);

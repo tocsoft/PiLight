@@ -25,6 +25,7 @@ namespace OpenhabStreamDeckAction
         public LightState currentState;
         public bool paused = false;
         public bool loading = true;
+        public string IPAddress { get; set; }
 
 
         public string context;
@@ -34,7 +35,6 @@ namespace OpenhabStreamDeckAction
 
         public ToggleItemAction()
         {
-
         }
         private void LoadStateBackground()
         {
@@ -46,7 +46,7 @@ namespace OpenhabStreamDeckAction
                 {
                     await Manager.SetImageAsync(context, $"images/allOffPaused@2x.png");
                 }
-                client = await Client.Discover();
+                client = await Connect();
 
                 while (!token.IsCancellationRequested)
                 {
@@ -67,7 +67,7 @@ namespace OpenhabStreamDeckAction
         }
         private async Task LoadState()
         {
-            client = client ?? await Client.Discover();
+            client = client ?? await Connect();
             StatusInfo status;
             try
             {
@@ -75,7 +75,7 @@ namespace OpenhabStreamDeckAction
             }
             catch (Exception ex)
             {
-                client = await Client.Discover();
+                client = await Connect();
                 status = await client.GetStatus();
             }
 
@@ -134,7 +134,7 @@ namespace OpenhabStreamDeckAction
             if (paused)
             {
                 paused = false;
-                client = client ?? await Client.Discover();
+                client = client ?? await Connect();
                 await client.Unpause();
             }
             else
@@ -169,12 +169,12 @@ namespace OpenhabStreamDeckAction
         {
             try
             {
-                client = client ?? await Client.Discover();
+                client = client ?? await Connect();
                 await client.TurnOffAllLights();
             }
             catch (Exception ex)
             {
-                client = await Client.Discover();
+                client = await Connect();
                 await TurnOffAllLights(counter++);
 
                 if (counter > 3)
@@ -188,12 +188,12 @@ namespace OpenhabStreamDeckAction
         {
             try
             {
-                client = client ?? await Client.Discover();
+                client = client ?? await Connect();
                 await client.TurnOnLight(light, false);
             }
             catch (Exception ex)
             {
-                client = await Client.Discover();
+                client = await Connect();
                 await TurnOnLight(light, counter++);
 
                 if (counter > 3)
@@ -207,12 +207,12 @@ namespace OpenhabStreamDeckAction
         {
             try
             {
-                client = client ?? await Client.Discover();
+                client = client ?? await Connect();
                 await client.Unpause();
             }
             catch (Exception ex)
             {
-                client = await Client.Discover();
+                client = await Connect();
                 await Unpause(counter++);
 
                 if (counter > 3)
@@ -222,16 +222,29 @@ namespace OpenhabStreamDeckAction
             }
         }
 
+        private Task<Client> Connect()
+        {
+            if (string.IsNullOrWhiteSpace(SettingsModel?.IPAddress))
+            {
+                return Client.Discover();
+            }
+            else
+            {
+                return Task.FromResult(new Client(new Uri("http://" + SettingsModel.IPAddress)));
+            }
+        }
+
         public override async Task OnDidReceiveSettings(StreamDeckEventPayload args)
         {
-            await base.OnDidReceiveSettings(args);
+            await base.OnDidReceiveSettings(args); ;
+            Restart();
         }
 
         public override async Task OnWillAppear(StreamDeckEventPayload args)
         {
             await base.OnWillAppear(args);
             this.context = args.context;
-            LoadStateBackground();
+            Restart();
         }
 
         public override Task OnApplicationDidLaunch(StreamDeckEventPayload args)
@@ -243,6 +256,16 @@ namespace OpenhabStreamDeckAction
             return base.OnApplicationDidTerminate(args);
         }
 
+        private async Task Restart()
+        {
+            client = null;
+            this.cts?.Cancel();
+            if (this.t != null)
+            {
+                await this.t;
+            }
+            LoadStateBackground();
+        }
 
         public override async Task OnWillDisappear(StreamDeckEventPayload args)
         {
